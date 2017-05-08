@@ -21,8 +21,8 @@ languages = {
             'ejecuto el comando',
             'ejecuto "{alias}"'],
         'i_set_the_following_environment_variables': [
-            'que establezo las siguientes variables de entorno',
-            'establezo las siguientes variables de entorno'],
+            'que establezco las siguientes variables de entorno',
+            'establezco las siguientes variables de entorno'],
         'i_launch_this_daemon': [
             'que lanzo este servicio',
             'que lanzo "{alias}"'],
