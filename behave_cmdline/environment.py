@@ -1,3 +1,7 @@
+from contextlib import ExitStack
+import os
+
+
 def before_scenario(context, scenario):
     context.cmdline_env = dict(os.environ)
     context.cmdline_processes = dict()

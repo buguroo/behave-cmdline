@@ -1,4 +1,19 @@
 languages = {
+    'en': {
+        'i_run_this_command': [
+            'I run this command',
+            'I run "{alias}"'],
+        'i_set_the_following_environment_variables': [
+            'I set the following environment variables'],
+        'i_launch_this_daemon': [
+            'I launch this daemon',
+            'I launch "{alias}"'],
+        'i_see_in_the_output_of': [
+            'I see in the output "{stream}"',
+            'I see in the output "{stream}" of "{alias}"',
+            ('I see in the output "{stream}" of "{alias}" '
+             'within a maximium of "{timeout:d}" seconds')]
+    },
     'es': {
         'i_run_this_command': [
             'que ejecuto este comando',
@@ -11,25 +26,10 @@ languages = {
         'i_launch_this_daemon': [
             'que lanzo este servicio',
             'que lanzo "{alias}"'],
-        'in_the_output_of': [
-            'en la salida "{stream}"',
-            'en la salida "{stream}" de "{alias}"',
-            ('en la salida "{stream}" de "{alias}" '
+        'i_see_in_the_output_of': [
+            'veo en la salida "{stream}"',
+            'veo en la salida "{stream}" de "{alias}"',
+            ('veo en la salida "{stream}" de "{alias}" '
              'como máximo en "{timeout:d}" segundos')]
-        },
-    'en': {
-        'i_run_this_command': [
-            'i run this command',
-            'i run "{alias}"'],
-        'i_set_the_following_environment_variables': [
-            'i set the following environment variables'],
-        'i_launch_this_daemon': [
-            'i launch this daemon',
-            'i launch "{alias}"'],
-        'in_the_output_of': [
-            'in the output "{stream}"',
-            'in the output "{stream}" of "{alias}"',
-            ('in the output "{stream}" of "{alias}" '
-             'within a maximium of "{timeout:d}" seconds')]
-    }
+    },
 }

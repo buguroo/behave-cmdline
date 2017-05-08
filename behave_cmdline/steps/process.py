@@ -60,16 +60,20 @@ class Process:
     def __exit__(self, *_):
         self.terminate()
 
+        for reader in self.readers:
+            reader.join()
+
     def read_stream(self, name):
         input_stream = getattr(self.process, name)
         output_queue = getattr(self, name)
         output_file = getattr(self, name + '_file')
-        for line in iter(input_stream.readline, b''):
+        for lineno, line in enumerate(iter(input_stream.readline, b'')):
+            if lineno > 0:
+                output_file.write(b'\n')
             output_queue.put(line)
             output_file.write(line)
-            output_file.write(b'\n')
 
-    def check_stream(self, stream, *checks, timeout=None):
+    def check_stream(self, stream, *checks, timeout=None, encoding='utf-8'):
         checks = list(checks)
         input_stream = getattr(self, stream)
 
@@ -84,13 +88,22 @@ class Process:
         while checks and not do_exit():
             while not input_stream.empty():
                 line = input_stream.get_nowait()
-                line = line.decode('utf-8')
+
+                # If encoding is specified (default), line is decoded;
+                # otherwise is bytes.
+                if encoding is not None:
+                    line = line.decode(encoding)
+
                 for check in checks.copy():
                     try:
                         check.send(line)
                     except StopIteration as exc:
-                        # El chequeo terminó satisfactoriamente
+                        # Check success
                         checks.remove(check)
+
+            # The process exit
+            if self.process.returncode is not None:
+                break
 
         for check in checks:
             check.close()

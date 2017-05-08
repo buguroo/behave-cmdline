@@ -1,4 +1,7 @@
 from functools import partial
+import re
+
+from .process import Process
 
 
 def i_set_the_following_environment_variables(context):
@@ -38,40 +41,50 @@ def i_launch_this_daemon(context, alias="default"):
     context.cmdline_exitstack.enter_context(process)
 
 
-def in_the_output_of(context, stream, alias="default", timeout=float('inf')):
+def i_see_in_the_output_of(context, stream, alias="default", timeout=None):
     """
-    Busca en la salida `stream` del comando ejecutado las valores
-    pasados en la tabla línea a línea, respetando el orden.
 
-        - Columna `logic`: Aparece/No Aparece.
-        - Columna `text`: Busca con `in`.
-        - Columna `regex`: Busca con `re.match`.
+    Search on the output `stream` of the `alias` command looking for the
+    table values.
+
+        - Column `mode`: `plain`/`regex`
+        - Column `shows`: `Y`/`N`
+        - Column `value`: The text or regex to match or not.
 
     """
-    if 'text' in context.table.headings:
-        def matcher(fragment, line):
-            return fragment in line
-    elif 'regex' in context.table.headings:
-        def matcher(regex, line):
-            return re.match(regex, line)
-    else:
-        raise ValueError("Either text or regex is mandatory.")
+    def plain_matcher(fragment, line):
+        return fragment in line
+
+    def regex_matcher(regex, line):
+        return re.match(regex, line)
 
     checks = []
     for row in context.table:
-        must_appear = not row["logic"].lower().startswith("no")
-        do_match = partial(matcher, row.get("text", row.get("regex")))
+
+        if row["shows"] == "Y":
+            shows = True
+        elif row["shows"] == "N":
+            shows = False
+        else:
+            raise ValueError("Unknown value for column `shows`")
+
+        if row["mode"] == "plain":
+            do_match = partial(plain_matcher, row["value"])
+        elif row["mode"] == "regex":
+            do_match = partial(regex_matcher, row["value"])
+        else:
+            raise ValueError("Unknown value for column `mode`")
 
         def check_lines():
             try:
                 while True:
                     if do_match((yield)):
-                        if not must_appear:
+                        if not shows:
                             assert False, row
                         else:
                             return
             except GeneratorExit as exc:
-                if must_appear:
+                if shows:
                     assert False, row
 
         check = check_lines()

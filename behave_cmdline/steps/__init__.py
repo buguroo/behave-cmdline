@@ -7,6 +7,7 @@ from behave import step
 
 from . import _steps
 from .i18n import languages
+from . import process
 
 
 class BehaveCmdlineStepsLoader:
