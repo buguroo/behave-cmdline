@@ -1,0 +1,3 @@
+[submodule "behave_cmdline/steps/stepcollection"]
+	path = behave_cmdline/steps/stepcollection
+	url = https://github.com/buguroo/behave-stepcollection.git

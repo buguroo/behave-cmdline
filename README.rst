@@ -27,9 +27,9 @@ From your `steps.py` file import the step definition for your language:
 2. Add some hooks in your environment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In your `environment.py` add this two lines in the very top of the
-before and after scenario. If you don't have those, then create them as
-in the example:
+Add this two lines in your `environment.py`, in the functions before and
+after scenario. If you don't have those, then create them as in the
+example:
 
 .. code-block:: python
 
