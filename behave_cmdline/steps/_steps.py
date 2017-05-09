@@ -26,7 +26,7 @@ def i_run_this_command(context, alias="default"):
     """
     process = Process(context.text, context.cmdline_env, daemon=False)
 
-    context.cmdline_processes[alias] = process
+    context.cmdline_processes[alias].append(process)
     context.cmdline_exitstack.enter_context(process)
 
 
@@ -37,7 +37,7 @@ def i_launch_this_daemon(context, alias="default"):
     """
     process = Process(context.text, context.cmdline_env, daemon=True)
 
-    context.cmdline_processes[alias] = process
+    context.cmdline_processes[alias].append(process)
     context.cmdline_exitstack.enter_context(process)
 
 
@@ -91,5 +91,6 @@ def i_see_in_the_output_of(context, stream, alias="default", timeout=None):
         check.send(None)
         checks.append(check)
 
-    context.cmdline_processes[alias].check_stream(
+    # We check the last instance of the process
+    context.cmdline_processes[alias][-1].check_stream(
         stream, *checks, timeout=timeout)

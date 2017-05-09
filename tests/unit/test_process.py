@@ -14,7 +14,7 @@ def test_daemon_process_context_manager():
 def test_nondaemon_process_context_manager():
     from behave_cmdline.steps.process import Process
 
-    start = datetime.now() 
+    start = datetime.now()
     with Process("sleep 2", env={}) as p:
         inside = datetime.now()
     assert inside - start >= timedelta(seconds=2)

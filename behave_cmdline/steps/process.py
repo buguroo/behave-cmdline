@@ -78,17 +78,26 @@ class Process:
         input_stream = getattr(self, stream)
 
         if timeout is None:
-            def do_exit():
+            def timedout():
                 return False
         else:
             exceeded = self.start_time + timedelta(seconds=timeout)
-            def do_exit():
+            def timedout():
                 return datetime.today() > exceeded
 
-        while checks and not do_exit():
-            while not input_stream.empty():
-                line = input_stream.get_nowait()
-
+        while checks and not timedout():
+            try:
+                line = input_stream.get(block=True, timeout=0.1)
+            except queue.Empty:
+                if self.process.returncode is not None:
+                    # The process exited
+                    if any(r.is_alive() for r in self.readers):
+                        # Some reader is still running, we wait
+                        continue
+                    else:
+                        # All readers finished, we exit
+                        break
+            else:
                 # If encoding is specified (default), line is decoded;
                 # otherwise is bytes.
                 if encoding is not None:
@@ -100,10 +109,6 @@ class Process:
                     except StopIteration as exc:
                         # Check success
                         checks.remove(check)
-
-            # The process exit
-            if self.process.returncode is not None:
-                break
 
         for check in checks:
             check.close()
