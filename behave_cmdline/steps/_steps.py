@@ -102,9 +102,8 @@ def in_the_output_of_happens_that(context, stream, alias="default",
 
     ns = importlib.import_module(
         "behave_cmdline.steps.naturalsearch.%s" % __language__)
-    from behave_cmdline.steps.naturalsearch import substeps
 
-    checks = substeps.run(context.text, context)
+    checks = ns.substeps.run(context.text, context)
 
     # We check the last instance of the process
     context.cmdline_processes[alias][-1].check_stream(
