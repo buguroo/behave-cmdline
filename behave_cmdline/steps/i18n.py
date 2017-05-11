@@ -37,7 +37,7 @@ languages = {
              'como máximo en "{timeout:d}" segundos')],
         'in_the_output_of_happens_that': [
             'en la salida "{stream}" de "{alias}" ocurre que',
-            'en la salida "{stream}" de "{alias}", en menos de "{timeout}" seconds,  ocurre que'
+            'en la salida "{stream}" de "{alias}", en menos de "{timeout}" segundos, ocurre que'
         ]
     },
 }
