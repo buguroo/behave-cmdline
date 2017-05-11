@@ -1,4 +1,5 @@
 from functools import partial
+import importlib
 import re
 
 from .process import Process
@@ -90,6 +91,20 @@ def i_see_in_the_output_of(context, stream, alias="default", timeout=None):
         check = check_lines()
         check.send(None)
         checks.append(check)
+
+    # We check the last instance of the process
+    context.cmdline_processes[alias][-1].check_stream(
+        stream, *checks, timeout=timeout)
+
+
+def in_the_output_of_happens_that(context, stream, alias="default",
+                                  timeout=None):
+
+    ns = importlib.import_module(
+        "behave_cmdline.steps.naturalsearch.%s" % __language__)
+    from behave_cmdline.steps.naturalsearch import substeps
+
+    checks = substeps.run(context.text)
 
     # We check the last instance of the process
     context.cmdline_processes[alias][-1].check_stream(

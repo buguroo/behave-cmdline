@@ -12,7 +12,10 @@ languages = {
             'I see in the output "{stream}"',
             'I see in the output "{stream}" of "{alias}"',
             ('I see in the output "{stream}" of "{alias}" '
-             'within a maximium of "{timeout:d}" seconds')]
+             'within a maximium of "{timeout:d}" seconds')],
+        'in_the_output_of_happens_that': [
+            'in the output "{stream}" of "{alias}" happens that'
+        ]
     },
     'es': {
         'i_run_this_command': [
@@ -30,6 +33,9 @@ languages = {
             'veo en la salida "{stream}"',
             'veo en la salida "{stream}" de "{alias}"',
             ('veo en la salida "{stream}" de "{alias}" '
-             'como máximo en "{timeout:d}" segundos')]
+             'como máximo en "{timeout:d}" segundos')],
+        'in_the_output_of_happens_that': [
+            'en la salida "{stream}" de "{alias}" ocurre que'
+        ]
     },
 }
