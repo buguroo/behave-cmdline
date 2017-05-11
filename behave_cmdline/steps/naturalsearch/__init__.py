@@ -1,5 +1,5 @@
 from . import _steps
-from ..stepcollection.stepcollection import define_steps
+from ..stepcollection import define_steps
 from .i18n import languages
 
 define_steps(r"^behave_cmdline\.steps\.naturalsearch\.(?P<lang>[^\.]+)$",
