@@ -89,7 +89,6 @@ def i_see_in_the_output_of(context, stream, alias="default", timeout=None):
                     assert False, row
 
         check = check_lines()
-        check.send(None)
         checks.append(check)
 
     # We check the last instance of the process

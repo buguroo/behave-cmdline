@@ -75,6 +75,11 @@ class Process:
 
     def check_stream(self, stream, *checks, timeout=None, encoding='utf-8'):
         checks = list(checks)
+
+        # Initialize generators
+        for check in checks:
+            check.send(None)
+
         input_stream = getattr(self, stream)
 
         if timeout is None:

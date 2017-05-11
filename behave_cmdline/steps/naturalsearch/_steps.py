@@ -23,26 +23,22 @@ def _check_lines(do_match, shows):
 def i_see_the_string(context, string):
     do_match = partial(_plain_matcher, string)
     check = _check_lines(do_match, shows=True)
-    check.send(None)
     yield from check
 
 
 def i_dont_see_the_string(context, string):
     do_match = partial(_plain_matcher, string)
     check = _check_lines(do_match, shows=False)
-    check.send(None)
     yield from check
 
 
 def the_regex_matches(context, regex):
     do_match = partial(_regex_matcher, regex)
     check = _check_lines(do_match, shows=True)
-    check.send(None)
     yield from check
 
 
 def the_regex_doesnt_match(context, regex):
     do_match = partial(_regex_matcher, regex)
     check = _check_lines(do_match, shows=False)
-    check.send(None)
     yield from check
