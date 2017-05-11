@@ -14,7 +14,8 @@ languages = {
             ('I see in the output "{stream}" of "{alias}" '
              'within a maximium of "{timeout:d}" seconds')],
         'in_the_output_of_happens_that': [
-            'in the output "{stream}" of "{alias}" happens that'
+            'in the output "{stream}" of "{alias}" happens that',
+            'in the output "{stream}" of "{alias}", in less than "{timeout}" seconds, happens that'
         ]
     },
     'es': {
@@ -35,7 +36,8 @@ languages = {
             ('veo en la salida "{stream}" de "{alias}" '
              'como máximo en "{timeout:d}" segundos')],
         'in_the_output_of_happens_that': [
-            'en la salida "{stream}" de "{alias}" ocurre que'
+            'en la salida "{stream}" de "{alias}" ocurre que',
+            'en la salida "{stream}" de "{alias}", en menos de "{timeout}" seconds,  ocurre que'
         ]
     },
 }
