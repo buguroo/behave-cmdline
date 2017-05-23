@@ -7,7 +7,7 @@ def _regex_matcher(regex, line):
     return re.match(regex, line)
 
 
-def _check_lines(do_match, shows):
+def _check_lines(do_match, shows, row):
     try:
         while True:
             if do_match((yield)):
@@ -23,26 +23,26 @@ def _check_lines(do_match, shows):
 def i_see_the_string(context, string):
     from functools import partial
     do_match = partial(_plain_matcher, string)
-    check = _check_lines(do_match, shows=True)
+    check = _check_lines(do_match, shows=True, string)
     yield from check
 
 
 def i_dont_see_the_string(context, string):
     from functools import partial
     do_match = partial(_plain_matcher, string)
-    check = _check_lines(do_match, shows=False)
+    check = _check_lines(do_match, shows=False, string)
     yield from check
 
 
 def the_regex_matches(context, regex):
     from functools import partial
     do_match = partial(_regex_matcher, regex)
-    check = _check_lines(do_match, shows=True)
+    check = _check_lines(do_match, shows=True, regex)
     yield from check
 
 
 def the_regex_doesnt_match(context, regex):
     from functools import partial
     do_match = partial(_regex_matcher, regex)
-    check = _check_lines(do_match, shows=False)
+    check = _check_lines(do_match, shows=False, regex)
     yield from check
