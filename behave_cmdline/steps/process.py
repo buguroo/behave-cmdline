@@ -37,8 +37,6 @@ class Process:
             env=self.env,
             preexec_fn=os.setpgrp)
 
-        self.start_time = datetime.today()
-
         self.readers.append(
             threading.Thread(target=self.read_stream,
                              args=['stdout'],
@@ -74,6 +72,8 @@ class Process:
             output_file.write(line)
 
     def check_stream(self, stream, *checks, timeout=None, encoding='utf-8'):
+        self.start_time = datetime.today()
+
         checks = list(checks)
 
         # Initialize generators
